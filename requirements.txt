@@ -3,7 +3,7 @@ Flask
 itsdangerous
 Jinja2
 MarkupSafe
-Werkzeug
+Werkzeug==0.16.1
 flask-restplus
 webargs
 datetime

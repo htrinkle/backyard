@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, render_template
-from flask_restplus import Api, Resource, reqparse
+from flask_restplus import Api, Resource
 # from webargs import fields, validate
 # from webargs.flaskparser import use_kwargs, use_args, parser
 
@@ -32,45 +32,22 @@ readings = {
       }
     }
 
-sensor_arg = reqparse.RequestParser()
-sensor_arg.add_argument('description', type=str, required=True)
-sensor_arg.add_argument('type', type=int, required=True)
-
-measurement_arg = reqparse.RequestParser()
-measurement_arg.add_argument('time', type=int, required=True)
-measurement_arg.add_argument('val',  type=int, required=True)
-
-history_arg = reqparse.RequestParser()
-history_arg.add_argument('endtime', type=int, required=False)
-history_arg.add_argument('starttime', type=int, required=False)
-history_arg.add_argument('type', type=int, required=False)
-history_arg.add_argument('sensor', type=int, required=False)
-history_arg.add_argument('max', type=int, required=False)
 
 class Sensor(Resource):
-  @api.expect(sensor_arg, validate=True)
+  #@api.expect(sensor_arg, validate=True)
   def put(self, id):
     """ Install a new sensor """
-    args = sensor_arg.parse_args()
-    return {
-      'description': args['description'],
-      'type': args['type']
-    }, 201 
+    return {"sensor":"added"}, 201 
   
 
 class Measurement(Resource):
-  @api.expect(measurement_arg, validate=True)
+  #@api.expect(measurement_arg, validate=True)
   def put(self, id):
     """ Return list of all sensor readings. """
-    args = measurement_arg.parse_args()
-    return {
-      'id':id,
-      'time': args['time'],
-      'val': args['val']
-    }, 201 
+    return {"measurement":"added"}, 201 
 
 class History(Resource):
-  @api.expect(history_arg, validate=True)
+  #@api.expect(history_arg, validate=True)
   def get(self):
     """ Return filtered list of measurements """
     return {
