@@ -16,20 +16,22 @@ key_map = {
 'hansnodemcu': '1234abcd'
 }
 
-temperature = []
+data = []
 
 @api.route('/<device>')
 @api.doc(params={'device': 'device name', 'key':'api key'})
 class Device(Resource):
   def get(self, device):
     args = deviceParser.parse_args()
+
     if device not in key_map.keys():
       return "", 401
     if key_map[device] != args['key']:
       return "", 401
+
     result = {}
-    for i in range (len(temperature)):
-      result[temperature[i][0]] = temperature[i][1];
+    for i in range (len(data)):
+      result[data[i][0]] = data[i][1];
     
     return result
 
@@ -40,9 +42,14 @@ class Device(Resource):
       return "", 401
     if key_map[device] != args['key']:
       return "", 401
+
+    data = []
     now = time.time();
-    temperature.append( (now,args['temp']) )
-    temperature = temperature[-1000:]
+    data.append( (now,args['temp']) )
+
+    if len(data) > 1000:
+        data = data[-1000:]
+
     return "OK", 200
 
 ########## Web Page 
@@ -52,8 +59,7 @@ def root():
   return render_template('root.html')
 
 if __name__ == '__main__':
-  app.debug = true
-  app.run(ssl_context='adhoc')
+  app.run()
 
 
 
