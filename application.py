@@ -16,7 +16,9 @@ key_map = {
 'hansnodemcu': '1234abcd'
 }
 
-data = []
+store = {
+'t': []
+}
 
 @api.route('/<device>')
 @api.doc(params={'device': 'device name', 'key':'api key'})
@@ -29,11 +31,17 @@ class Device(Resource):
     if key_map[device] != args['key']:
       return "", 401
 
-    result = {}
-    for i in range (len(data)):
-      result[data[i][0]] = data[i][1];
-    
-    return result
+    data = store['t']
+    if len(data) == 0:
+      return {}
+
+    time_list = []
+    temp_list = []
+    for x in data:
+      time_list += [x[0]]
+      temp_list += [x[1]]
+      
+    return {'temp': ','.join(map(str, temp_list)) , 'time': ','.join(map(str, time_list))}
 
   @api.doc(params={'temp': '23.56'})
   def post(self, device):
@@ -43,12 +51,14 @@ class Device(Resource):
     if key_map[device] != args['key']:
       return "", 401
 
-    data = []
-    now = time.time();
-    data.append( (now,args['temp']) )
+    data = store['t']
+    now = time.time()
+    data = data + [[now,args['temp']]]
 
     if len(data) > 1000:
         data = data[-1000:]
+    
+    store['t'] = data
 
     return "OK", 200
 
