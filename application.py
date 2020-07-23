@@ -6,6 +6,7 @@ import json
 deviceParser = reqparse.RequestParser()
 deviceParser.add_argument('temp', type=float)
 deviceParser.add_argument('key', type=str)
+deviceParser.add_argument('n', type=int)
 
 app = Flask(
     __name__ )
@@ -28,7 +29,7 @@ except:
     print("data.txt not found - empty data")
 
 @api.route('/<device>')
-@api.doc(params={'device': 'device name', 'key':'api key'})
+@api.doc(params={'device': 'device name', 'key':'api key', 'n':'number'})
 class Device(Resource):
   def get(self, device):
     args = deviceParser.parse_args()
@@ -47,7 +48,13 @@ class Device(Resource):
     for x in data:
       time_list += [x[0]]
       temp_list += [x[1]]
-      
+
+    if 'n' in args.keys():
+      n = args['n']
+      if type(n) is int: 
+        time_list = time_list[-n:]
+        temp_list = temp_list[-n:]
+    
     return {'temp': ','.join(map(str, temp_list)) , 'time': ','.join(map(str, time_list))}
 
   @api.doc(params={'temp': '23.56'})
