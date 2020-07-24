@@ -64,7 +64,7 @@ function updateData(data) {
 	
 	gauge.value = v_list[v_list.length - 1]
     gaugeText.innerHTML = "Temperature of " +
-      v_list[v_list.length-1].toString() + " °C" +
+      v_list[v_list.length-1].toFixed(1).toString() + " °C" +
       " was recorded at " + 
       moment(t_list[t_list.length -1]*1000).format('DD:MM:YYYY h:mm:ss a')
       
