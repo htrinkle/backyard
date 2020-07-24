@@ -63,8 +63,11 @@ function updateData(data) {
 	chart.update();
 	
 	gauge.value = v_list[v_list.length - 1]
-    gaugeText.innerHTML = "Temperature recorded at " + 
+    gaugeText.innerHTML = "Temperature of " +
+      v_list[v_list.length-1].toString() + " °C" +
+      " was recorded at " + 
       moment(t_list[t_list.length -1]*1000).format('DD:MM:YYYY h:mm:ss a')
+      
 	gauge.update()
 	
 }		
