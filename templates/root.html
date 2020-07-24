@@ -8,14 +8,22 @@
 <body>
     <script src="../static/js/gauge.min.js"></script> 
 	<script src="../static/js/Chart.js"></script>
+	<script src="../static/js/moment.min.js"></script>
   <div>
-    <p> Root Template </p>
+    <h1> Backyard Temperature Monitoring </h1>
   </div>
-  <div>
-    <p> A temperature gauge </p>
+  <div style="text-align:center;">
+    <div id="gaugeText"> </div>
     <canvas id="myGauge"></canvas>
     <p> A temperature chart </p>
-    <canvas id="myChart"></canvas>  
+    <div style="text-align:center;" >
+      <canvas id="myChart"></canvas>  
+      <form action="javascript:setN()">
+          <label for="numSamples">Number of samples to display (10 to 1000):</label>
+          <input type="number" id="numSamples" name="numSamples" min="10" max="1000">
+          <input type="submit">
+      </form>
+    </div>
     <script src="../static/js/root.js"></script>
   </div>
 
