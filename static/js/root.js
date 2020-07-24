@@ -70,7 +70,9 @@ function updateData(data) {
       
 	gauge.update()
 	
-}		
+}	
+	
+document.getElementById("numSamples").value = n
 
 function setN() {
   n=document.getElementById("numSamples").value
