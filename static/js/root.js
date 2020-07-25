@@ -33,8 +33,45 @@ var gauge = new LinearGauge({
 	renderTo: 'myGauge',
 	width: 100,
     height: 400,
-	units: "°C",
-	value: 0
+    minValue: 0,
+    maxValue: 50,
+    majorTicks: [
+        "0",
+        "5",
+        "10",
+        "15",
+        "20",
+        "25",
+        "30",
+        "35",
+        "40",
+        "45",
+        "50"
+    ],
+    minorTicks: 1,
+    strokeTicks: true,
+    highlights: [
+        {
+
+        }
+    ],
+    colorNeedle: "rgba(200, 50, 50, .75)",
+    colorBarProgress: "rgba(200, 50, 50, .75)",
+    colorPlate: "#fff",
+    borderShadowWidth: 0,
+    borders: false,
+    needleType: "arrow",
+    needleWidth: 2,
+    animationDuration: 1500,
+    animationRule: "linear",
+    tickSide: "left",
+    numberSide: "left",
+    needleSide: "left",
+    barStrokeWidth: 7,
+    needleCircleSize: 7,
+    needleCircleOuter: true,
+    needleCircleInner: false,
+    value: 0
 }).draw();
 
 var n = 100
@@ -64,7 +101,7 @@ function updateData(data) {
 	
 	gauge.value = v_list[v_list.length - 1]
     gaugeText.innerHTML = "Temperature of " +
-      v_list[v_list.length-1].toFixed(1).toString() + " °C" +
+      v_list[v_list.length-1].toFixed(1).toString() + " &deg;C" +
       " was recorded at " + 
       moment(t_list[t_list.length -1]*1000).format('DD:MM:YYYY h:mm:ss a')
       
